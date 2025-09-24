@@ -58,7 +58,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
         res.cookie("token", token)
 
-        res.status(201).json({ message: "User logged in successfully", id: user._id })
+        res.status(200).json({ message: "User logged in successfully", id: user._id })
     } catch (error) {
         res.status(500).json({ message: "Error in login" })
     }

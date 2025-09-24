@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const historyItemSchema = new mongoose.Schema({
-    quizId: {
-        type: Number,
-        required: true
-    },
     quizName: {
         type: String,
         required: true
