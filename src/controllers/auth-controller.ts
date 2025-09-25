@@ -5,7 +5,7 @@ import bcryptjs from "bcryptjs"
 
 export async function register(req: Request, res: Response, next: NextFunction) {
     try {
-        
+
         const { name, email, password } = req.body
 
         // Check if any user with the given email exists in the db:
@@ -61,5 +61,34 @@ export async function login(req: Request, res: Response, next: NextFunction) {
         res.status(200).json({ message: "User logged in successfully", id: user._id })
     } catch (error) {
         res.status(500).json({ message: "Error in login" })
+    }
+}
+
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) return res.status(401).json({ message: "No token provided" });
+
+        const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
+        const user = await UserModel.findById(decoded.id).select("-password"); // exclude password
+
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        res.json({ message: "User fetched successfully", user });
+    } catch (error) {
+        res.status(500).json({ message: "Error in fetching user" });
+    }
+};
+
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const token = req.cookies
+        if (!token) {
+            res.status(400).json({ message: "You are not logged in" })
+        }
+        res.clearCookie("token")
+        res.json({ message: "Logged out successfully" })
+    } catch (error) {
+        res.status(500).json({ message: "Error in logging out" })
     }
 }

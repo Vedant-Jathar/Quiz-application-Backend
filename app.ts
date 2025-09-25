@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser"
 import authRoutes from "./src/routes/auth-routes"
 import categoryRoutes from "./src/routes/category-routes"
 import cors from "cors"
+import questionRoutes from "./src/routes/questions-routes"
+import { calculateScore } from "./src/controllers/result-controller"
 
 const app = express()
 
@@ -16,6 +18,8 @@ app.use(cors({
 
 app.use("/auth", authRoutes)
 app.use("/category", categoryRoutes)
+app.use("/questions", questionRoutes)
+app.use("/result", calculateScore)
 
 // app.get("/", (req: Request, res: Response) => {
 //     res.json("Hi how are you from port 4001")

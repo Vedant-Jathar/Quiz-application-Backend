@@ -1,15 +1,19 @@
 import mongoose from "mongoose";
 
 const historyItemSchema = new mongoose.Schema({
-    quizName: {
+    quizCategory: {
         type: String,
         required: true
     },
     difficultyLevel: {
         type: String,
+        required: true    
+    },                     
+    score: {
+        type: String,
         required: true
     },
-    score: {
+    total: {
         type: String,
         required: true
     },
